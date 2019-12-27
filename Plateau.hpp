@@ -6,12 +6,12 @@ class Plateau
 {
 public:
      int hauteur, largeur;
-     Case cases[10][10];
 
 public:
-    Plateau(int largeur, int hauteur);//initialiser la matrice
-    void affichagePlateau(Case *m);
-    void placerMurs(Case **m);
+    Plateau(int hauteur, int largeur);//initialiser la matrice
+    void affichagePlateau(Case ( *mm)[20]);
+    void placerMurs(Case (*mm)[20]);
+    void init(Case(*mm)[20]);
 };
 
 #endif

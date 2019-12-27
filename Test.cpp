@@ -9,13 +9,14 @@ int main(int argc, char const *argv[])
     int hauteur, largeur;
     cout << "veuillez introduire une hauteur ..";
     cin >> hauteur;
-    cout << "Veuillez introduire une largeur ..";
-    cin >> largeur;
-    Case m[hauteur][largeur];
     
-    Plateau plateau(hauteur, largeur);
-    plateau.placerMurs((Case **)&m);
-    plateau.affichagePlateau(&m);
+    
+    Case m[hauteur][20];
+    
+    Plateau plateau(hauteur, 20);
+    plateau.init(m);
+    plateau.placerMurs(m);
+    plateau.affichagePlateau(m);
 
 
 

@@ -1,22 +1,24 @@
 #include <iostream>
 #include "Plateau.hpp"
 #include <ctime>
+#include <fstream>
+#include <string>
 using namespace std;
 Plateau::Plateau(int h, int l){
     this->hauteur = h;
     this->largeur = l;
 }
 
-void Plateau::placerMurs(Case ( *matrice)[20]){
+void Plateau::placerMurs(Case ( *matrice)[LARGEUR]){
     int i = 0;
     //cette boucle pour placer le mur d'en haut
-    for (int j = 0; j < 20; j++)
+    for (int j = 0; j < LARGEUR; j++)
     {
         matrice[i][j].setEtat(0);
     }
     //placer le mur d'en bas
     i = this->hauteur-1;
-    for (int j = 0; j < 20; j++)
+    for (int j = 0; j < LARGEUR; j++)
     {
         matrice[i][j].setEtat(0);
     }
@@ -29,11 +31,11 @@ void Plateau::placerMurs(Case ( *matrice)[20]){
     //placer le mur à droite
     for (int i = 0; i < this->hauteur; i++)
     {
-        matrice[i][19].setEtat(0);
+        matrice[i][(LARGEUR-1)].setEtat(0);
     }
 }
 //initialiser la matrice
-void Plateau::init(Case (*m)[20]){
+void Plateau::init(Case (*m)[LARGEUR]){
     for (int i = 0; i < this->hauteur; i++)
         {
             for (int j = 0; j < this->largeur; j++)
@@ -44,7 +46,7 @@ void Plateau::init(Case (*m)[20]){
 }
 
 /*Affichage du plateau*/
-    void Plateau::affichagePlateau(Case ( *m)[20]){
+    void Plateau::affichagePlateau(Case ( *m)[LARGEUR]){
         for (int i = 0; i < this->hauteur; i++)
         {
             for (int j = 0; j < this->largeur; j++)
@@ -72,7 +74,7 @@ bool Plateau::verife(int p, vector<int> v){
 }
 
 /*Plcaer des obstacles dans la matrices */
-void Plateau::placerObstacles(Case(*mm)[20], int niveau){
+void Plateau::placerObstacles(Case(*mm)[LARGEUR], int niveau){
     int borneSup = niveau * 2;
     cout << "niveau : " << borneSup << endl;
     int x = 0, y = 0;//les coordonnees du lobstacle
@@ -81,7 +83,7 @@ void Plateau::placerObstacles(Case(*mm)[20], int niveau){
     while (indice < borneSup)
     {
         x = rand()%(this->hauteur - 2)+1;
-        y = rand()% 18;
+        y = rand()% LARGEUR;
         //si la position n'existe pas !
         if ( !this->verife((x-y), this->positions) )
         {
@@ -95,7 +97,7 @@ void Plateau::placerObstacles(Case(*mm)[20], int niveau){
     }
 }
 
-void Plateau::placerPortes(Case(*mm)[20]){
+void Plateau::placerPortes(Case(*mm)[LARGEUR]){
 
      int x = 0, y = 0;//les coordonnees de la porte
      int p1 = 0, p2 = 0;
@@ -108,13 +110,13 @@ void Plateau::placerPortes(Case(*mm)[20]){
      {
      case 0://dans le haut de la matrice
         x = 0;
-        y = rand()% 19;
+        y = rand()% (LARGEUR-1);
         mm[x][y].setEtat(3);
          
          break;
     case 1://dans le bas de la matrice
         x = hauteur -1;
-        y = rand()% 20;
+        y = rand()% LARGEUR;
         mm[x][y].setEtat(3);
         break;
     case 2://sur le coté gauche
@@ -125,7 +127,7 @@ void Plateau::placerPortes(Case(*mm)[20]){
     case 3:
         //sur le coté droit
         x = rand()%hauteur-1;
-        y = 19;
+        y = LARGEUR  - 1;
         mm[x][y].setEtat(3);
         break;
      
@@ -137,13 +139,13 @@ void Plateau::placerPortes(Case(*mm)[20]){
      {
      case 0://dans le haut de la matrice
         x = 0;
-        y = rand()% 19;
+        y = rand()% LARGEUR-1;
         mm[x][y].setEtat(3);
          
          break;
     case 1://dans le bas de la matrice
         x = hauteur -1;
-        y = rand()% 20;
+        y = rand()% LARGEUR;
         mm[x][y].setEtat(3);
         break;
     case 2://sur le coté gauche
@@ -154,7 +156,7 @@ void Plateau::placerPortes(Case(*mm)[20]){
     case 3:
         //sur le coté droit
         x = rand()%hauteur-1;
-        y = 19;
+        y = LARGEUR - 1;
         mm[x][y].setEtat(3);
         break;
      
@@ -162,10 +164,10 @@ void Plateau::placerPortes(Case(*mm)[20]){
          break;
      } 
 }
-void Plateau::placerGeurchars(Case(*mm)[20]){
+void Plateau::placerGeurchars(Case(*mm)[LARGEUR]){
         int x = 0, y = 0;
         x = (rand()%(this->hauteur - 2))+1;
-        y = rand()% 18;
+        y = rand()% LARGEUR - 2;
         //si la position n'existe pas !
         if ( !this->verife((x-y), this->positions) )
         {
@@ -175,13 +177,13 @@ void Plateau::placerGeurchars(Case(*mm)[20]){
         }
 }
 
-void Plateau::placerDiams(Case(*mm)[20]){
+void Plateau::placerDiams(Case(*mm)[LARGEUR]){
     int x = 0, y = 0, indice =0;
 
     while (indice < 2)
     {
         x = rand()%(this->hauteur - 2)+1;
-        y = rand()% 18;
+        y = rand()% LARGEUR - 2;
         //si la position n'existe pas !
         if ( !this->verife((x-y), this->positions) )
         {
@@ -195,12 +197,12 @@ void Plateau::placerDiams(Case(*mm)[20]){
     }
 }
 
-void Plateau::placerJoueur(Case(*mm)[20]){
+void Plateau::placerJoueur(Case(*mm)[LARGEUR]){
     int x = 0, y = 0, indice = 0;
     while (indice < 1)
     {
         x = rand()%(this->hauteur - 2)+1;
-        y = rand()% 18;
+        y = rand()% LARGEUR - 2;
         //si la position n'existe pas !
         if ( !this->verife((x-y), this->positions) )
         {
@@ -213,7 +215,7 @@ void Plateau::placerJoueur(Case(*mm)[20]){
 
 }
 
-void Plateau::placerStreumon(Case(*mm)[20], int niveau){
+void Plateau::placerStreumon(Case(*mm)[LARGEUR], int niveau){
     int borneSup = niveau + 1;
     int x = 0, y = 0;//les coordonnees du lobstacle
     srand(time(NULL));
@@ -221,7 +223,7 @@ void Plateau::placerStreumon(Case(*mm)[20], int niveau){
     while (indice < borneSup)
     {
         x = rand()%(this->hauteur - 2)+1;
-        y = rand()% 18;
+        y = rand()% LARGEUR - 2;
         //si la position n'existe pas !
         if ( !this->verife((x-y), this->positions) )
         {
@@ -233,4 +235,24 @@ void Plateau::placerStreumon(Case(*mm)[20], int niveau){
         }
         
     }
+}
+int Plateau::sauvegarderPlateau(Case (*mm)[LARGEUR], string nomFichier){
+    ofstream monFichier("Niveaux/"+nomFichier);
+    if ( monFichier )
+    {
+        for (int i = 0; i < hauteur; i++)
+        {
+            for (int j = 0; j < LARGEUR; j++)
+            {
+                monFichier << mm[i][j].getEtat();
+            }
+            monFichier << endl;
+            
+        }
+        
+    }else{
+        cout << "ERREUR : Impossible d'ouvrir le fichier " << endl;
+        return 0;
+    }
+    
 }

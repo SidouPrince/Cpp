@@ -24,7 +24,10 @@ void Case::setEtat(int etat){
         break;
     case 4: this->etat = this->EMPTY;
         break;
-    
+    case 5: this->etat = this->PLAYER;
+        break;
+    case 6: this->etat = this->STREUMON;
+        break;
     default:
         break;
     }
@@ -42,6 +45,10 @@ string Case::getEtat(){
     case 3 : return "-"; 
         break;
     case 4 : return " "; 
+        break;
+    case 5: return "J";
+        break;
+    case 6: return "S";
         break;
     default:
         break;

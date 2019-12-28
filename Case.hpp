@@ -11,6 +11,8 @@ class Case
     int const GEURCHARS = 2;
     int const TEUPORS = 3;
     int const EMPTY  = 4;
+    int const PLAYER = 5;
+    int const STREUMON = 6;
 private:
     // enum etat {REUMUS, DIAMS, GEURCHARS, TEUPORS, EMPTY};
     int etat;

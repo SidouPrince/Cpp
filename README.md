@@ -1,2 +1,4 @@
-Il reste de jouer tnak abarhoum 
-vive cici <==> abe..a d..ge.
+Ce qui reste à faire :
+ --> deplacement dans les diagonales
+ --> passage au niveau suivant
+ --> et les monstres

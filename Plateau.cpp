@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Plateau.hpp"
+#include "Joueur.hpp"
 #include <ctime>
 #include <fstream>
 #include <string>
@@ -256,3 +257,54 @@ int Plateau::sauvegarderPlateau(Case (*mm)[LARGEUR], string nomFichier){
     }
     
 }
+
+/*getX et getY pour retrouver la position du joueur*/
+int Plateau::getX(Case(*mm)[LARGEUR]){
+    for (int i = 1; i <= hauteur; i++)
+        {
+            for (int j = 1; j <= LARGEUR; j++)
+            {
+               if ( mm[i][j].getEtat().compare("J") == 0 )
+               {
+                   /* ça veut dire que le joueur se trouve dans cette case */
+                   return i;
+               }
+               
+            }
+            
+        }
+}
+
+int Plateau::getY(Case(*mm)[LARGEUR]){
+    for (int i = 1; i <= hauteur; i++)
+        {
+            for (int j = 1; j <= LARGEUR; j++)
+            {
+                if ( mm[i][j].getEtat().compare("J") == 0 )
+               {
+                   /* ça veut dire que le joueur se trouve dans cette case */
+                   return j;
+               }
+            }
+            
+            
+        }
+}
+
+ void Plateau::updatePosition(Case(*mm)[LARGEUR],Joueur j, int oldx, int oldy){
+    int newx = j.getX();
+    int newy = j.getY();
+        //je deplace directement
+        mm[oldx][oldy].setEtat(4);
+        mm[newx][newy].setEtat(5);
+    
+}
+
+bool Plateau::isGueurchar(Case (*mm)[LARGEUR], int x, int y){
+        if( mm[x][y].isTeleport() ) return true;
+        return false;
+    }
+bool Plateau::isDollar(Case (*mm)[LARGEUR], int x, int y){
+        if( mm[x][y].isDollar() ) return true;
+        return false;
+    }

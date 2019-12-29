@@ -20,6 +20,8 @@ private:
 public:
     Case(int e);
     Case();
+    bool isDollar();
+    bool isTeleport();
     
     void setEtat(int etat);
     string getEtat();

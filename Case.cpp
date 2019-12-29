@@ -32,7 +32,14 @@ void Case::setEtat(int etat){
         break;
     }
 }
-
+bool Case::isDollar(){
+    if( this->etat == DIAMS ) return true;
+    return false;
+}
+bool Case::isTeleport(){
+    if( this->etat == GEURCHARS ) return true;
+    return false;
+}
 string Case::getEtat(){
     switch (this->etat)
     {

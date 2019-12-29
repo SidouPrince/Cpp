@@ -1,15 +1,170 @@
 #include <iostream>
 #include "Case.hpp"
 #include "Plateau.hpp"
+#include "Joueur.hpp"
+#include <fstream>
 using namespace std;
+
+void lireFichier(string nomFichier){
+    ifstream fichier("Niveaux/"+nomFichier);
+
+        string ligne;
+        while ( getline(fichier, ligne))
+        {
+            cout << ligne << endl;
+        }
+}
+
+int getHauteur(string nomFichier){
+    ifstream fichier("Niveaux/"+nomFichier);
+
+        string ligne;
+        int nbLine = 0;
+        while ( getline(fichier, ligne))
+        {
+            nbLine++;
+        }
+    return nbLine;
+}
+//initialiser la matrice
+void uploadLevel(Case (*m)[LARGEUR], string nomFichier){
+    int nbLignes = getHauteur(nomFichier);
+    ifstream fichier("Niveaux/"+nomFichier);
+    string s;int i = 0;
+    while ( getline(fichier, s) )
+    {
+        for (int j = 0; j < LARGEUR; j++)
+            {
+                switch (s[j])
+                {
+                case 'X':
+                    m[i][j].setEtat(0);
+                    break;
+                case '$':
+                    m[i][j].setEtat(1);
+                    break;
+                case '*':
+                    m[i][j].setEtat(2);
+                    break;
+                case '-':
+                    m[i][j].setEtat(3);
+                    break;
+                case ' ':
+                    m[i][j].setEtat(4);
+                    break;
+                case 'J':
+                    m[i][j].setEtat(5);
+                    break;
+                case 'S':
+                    m[i][j].setEtat(6);
+                    break;
+                default:
+                    break;
+                }    
+            }
+             i++;
+            }
+           
+    
+}
 
 int main(int argc, char const *argv[])
 {
+    /*Touches de jeu
+    'h' --> se deplacer en haut
+    'b' --> se deplacer en bas
+    'g' --> à gauche
+    'd' --> droite
+    'q' --> quit
+    */
     static int niveau = 1;
-    int reponse = 0;
+    int reponse = 0, choix = 0;
     string nomF = "";
+    char touche ;
 
-    //creation du plateau -----> maintenant il faut le remplir
+    cout << "1- Jouer ?" << endl;
+    cout << "2- Créer Plateaux " << endl;
+    cin >> choix;
+    /* Debut du jeu  */
+    if ( choix == 1 ){
+   if ( argc > 1 )
+   {
+       //il y a aumoins un nom de fichier
+       int niveau = 1;
+       while ( niveau <= argc )
+       {
+        Case p[getHauteur(argv[niveau])][LARGEUR];
+        uploadLevel(p, argv[niveau]);
+        Plateau pl(getHauteur(argv[niveau]), LARGEUR);
+        
+        pl.affichagePlateau(p); 
+        int xLoc = pl.getX(p);
+        int yLoc = pl.getY(p);
+        //creation du joueur
+        Joueur joueur(xLoc, yLoc, 0, 0);
+        //la boucle d'interaction
+        while ( (touche = getchar()) != 'q' )
+        {
+            cout << "Score == " << joueur.getScore() << endl;
+            cout << "Teleportations == " << joueur.getTeleportation() << endl;
+            int currentX = pl.getX(p);
+            int currentY = pl.getY(p);
+            if ( touche == 'h' )
+            {
+               
+                if ( pl.validePosition(p, currentX - 1, currentY) ){
+                    if (pl.isDollar(p, currentX -1, currentY)) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX -1, currentY)) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.haut();
+                }
+                pl.updatePosition(p, joueur, currentX, currentY);
+                pl.affichagePlateau(p);
+            }
+            if ( touche == 'b' )
+            {
+               
+                if ( pl.validePosition(p, currentX + 1, currentY) ){ 
+                    if (pl.isDollar(p, currentX +1, currentY)) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX +1, currentY)) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.bas(getHauteur(argv[niveau]));
+                }
+                pl.updatePosition(p, joueur, currentX, currentY);
+                pl.affichagePlateau(p);
+            }
+            if ( touche == 'd' )
+            {
+                
+                if ( pl.validePosition(p, currentX, currentY + 1) ) {
+                    if (pl.isDollar(p, currentX, currentY + 1)) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX, currentY + 1)) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.droit();
+                }
+                pl.updatePosition(p, joueur, currentX, currentY);
+                pl.affichagePlateau(p);
+                
+            }
+            if ( touche == 'g' )
+            {
+                if ( pl.validePosition(p, currentX, currentY - 1) ) {
+                    if (pl.isDollar(p, currentX, currentY - 1)) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX, currentY - 1)) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.gauche();
+                    
+                }
+                pl.updatePosition(p, joueur, currentX, currentY);
+                pl.affichagePlateau(p);
+            }
+            
+        }
+        
+        //cout << "X == " << joueur.getX() << " Y == " << joueur.getY() << endl;
+        niveau++;
+
+       }
+   }
+   /* Fin du jeu */
+    }else{
+        //creation du plateau -----> maintenant il faut le remplir
     int hauteur, largeur;
     bool sortirBoucle = true;
     while(sortirBoucle){
@@ -43,6 +198,8 @@ int main(int argc, char const *argv[])
         }
         
     }
+    }
+    
 
     return 0;
 }

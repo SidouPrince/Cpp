@@ -20,7 +20,7 @@ void Case::setEtat(int etat){
         break;
     case 2: this->etat = this->GEURCHARS;
         break;
-    case 3: this->etat = this->TEUPORS;
+    case 3: this->etat = this->TEUPORS_CLOSED;
         break;
     case 4: this->etat = this->EMPTY;
         break;
@@ -28,6 +28,8 @@ void Case::setEtat(int etat){
         break;
     case 6: this->etat = this->STREUMON;
         break;
+    case 7: this->etat = this->TEUPORS_OPEN;
+        break;    
     default:
         break;
     }
@@ -38,6 +40,10 @@ bool Case::isDollar(){
 }
 bool Case::isTeleport(){
     if( this->etat == GEURCHARS ) return true;
+    return false;
+}
+bool Case::isOpen(){
+    if ( this->etat == TEUPORS_OPEN ) return true;
     return false;
 }
 string Case::getEtat(){
@@ -56,6 +62,8 @@ string Case::getEtat(){
     case 5: return "J";
         break;
     case 6: return "S";
+        break;
+    case 7: return "+";
         break;
     default:
         break;

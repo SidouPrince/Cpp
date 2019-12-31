@@ -10,6 +10,8 @@ class Plateau
 public:
     int hauteur, largeur;
     vector<int> positions;
+    vector<int>  emplacementPortes;
+
 
 public:
     Plateau(int hauteur, int largeur);//initialiser la matrice
@@ -28,6 +30,8 @@ public:
     /*Pour retrouver la position initiale du joueur sur le plateau*/
     int getX(Case(*mm)[LARGEUR]);
     int getY(Case(*mm)[LARGEUR]);
+    /*retrouver les coordonnées des portes*/
+    void getXYportes(Case(*mm)[LARGEUR]);
     /*Update la posotion du joueur*/
     static void updatePosition(Case (*mm)[LARGEUR],Joueur j ,int newX, int newY);
     /*Validité d'une position*/
@@ -38,6 +42,7 @@ public:
     }
     bool isDollar(Case (*mm)[LARGEUR], int x, int y);
     bool isGueurchar(Case (*mm)[LARGEUR], int x, int y);
+    //ouvrir Une porte
+    void openDoor(Case (*mm)[LARGEUR], int x, int y);
 };
-
 #endif

@@ -105,7 +105,7 @@ void Plateau::placerPortes(Case(*mm)[LARGEUR]){
      while (p1 == p2)
      {
         p1 = rand()%4;
-        p2 = rand()% 4;
+        p2 = rand()%4;
      }
      switch (p1)
      {
@@ -113,7 +113,7 @@ void Plateau::placerPortes(Case(*mm)[LARGEUR]){
         x = 0;
         y = rand()% (LARGEUR-1);
         mm[x][y].setEtat(3);
-         
+
          break;
     case 1://dans le bas de la matrice
         x = hauteur -1;
@@ -142,7 +142,6 @@ void Plateau::placerPortes(Case(*mm)[LARGEUR]){
         x = 0;
         y = rand()% LARGEUR-1;
         mm[x][y].setEtat(3);
-         
          break;
     case 1://dans le bas de la matrice
         x = hauteur -1;
@@ -274,6 +273,23 @@ int Plateau::getX(Case(*mm)[LARGEUR]){
             
         }
 }
+//emplacement des portes
+void Plateau::getXYportes(Case(*mm)[LARGEUR]){
+     for (int i = 0; i < hauteur; i++)
+        {
+            for (int j = 0; j < LARGEUR; j++)
+            {
+               if ( mm[i][j].getEtat().compare("-") == 0 )
+               {
+                   /* ça veut dire que la porte se trouve dans cette case */
+                   this->emplacementPortes.push_back(i);
+                   this->emplacementPortes.push_back(j);
+               }
+               
+            }
+            
+        }
+}
 
 int Plateau::getY(Case(*mm)[LARGEUR]){
     for (int i = 1; i <= hauteur; i++)
@@ -307,4 +323,9 @@ bool Plateau::isGueurchar(Case (*mm)[LARGEUR], int x, int y){
 bool Plateau::isDollar(Case (*mm)[LARGEUR], int x, int y){
         if( mm[x][y].isDollar() ) return true;
         return false;
-    }
+}
+
+//si la porte est fermée on l'ouvre
+void Plateau::openDoor(Case (*mm)[LARGEUR], int x, int y){
+   if (! mm[x][y].isOpen() ) mm[x][y].setEtat(7);
+}

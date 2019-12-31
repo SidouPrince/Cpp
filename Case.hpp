@@ -9,7 +9,8 @@ class Case
     int const REUMUS = 0;
     int const DIAMS = 1;
     int const GEURCHARS = 2;
-    int const TEUPORS = 3;
+    int const TEUPORS_CLOSED = 3;
+    int const TEUPORS_OPEN = 7;
     int const EMPTY  = 4;
     int const PLAYER = 5;
     int const STREUMON = 6;
@@ -22,6 +23,7 @@ public:
     Case();
     bool isDollar();
     bool isTeleport();
+    bool isOpen();
     
     void setEtat(int etat);
     string getEtat();

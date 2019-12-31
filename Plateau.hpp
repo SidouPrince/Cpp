@@ -44,5 +44,6 @@ public:
     bool isGueurchar(Case (*mm)[LARGEUR], int x, int y);
     //ouvrir Une porte
     void openDoor(Case (*mm)[LARGEUR], int x, int y);
+    bool isOpen(Case(*mm)[LARGEUR], int x, int y);
 };
 #endif

@@ -259,9 +259,9 @@ int Plateau::sauvegarderPlateau(Case (*mm)[LARGEUR], string nomFichier){
 
 /*getX et getY pour retrouver la position du joueur*/
 int Plateau::getX(Case(*mm)[LARGEUR]){
-    for (int i = 1; i <= hauteur; i++)
+    for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 1; j <= LARGEUR; j++)
+            for (int j = 0; j < LARGEUR; j++)
             {
                if ( mm[i][j].getEtat().compare("J") == 0 )
                {
@@ -292,9 +292,9 @@ void Plateau::getXYportes(Case(*mm)[LARGEUR]){
 }
 
 int Plateau::getY(Case(*mm)[LARGEUR]){
-    for (int i = 1; i <= hauteur; i++)
+    for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 1; j <= LARGEUR; j++)
+            for (int j = 0; j < LARGEUR; j++)
             {
                 if ( mm[i][j].getEtat().compare("J") == 0 )
                {
@@ -328,4 +328,10 @@ bool Plateau::isDollar(Case (*mm)[LARGEUR], int x, int y){
 //si la porte est fermée on l'ouvre
 void Plateau::openDoor(Case (*mm)[LARGEUR], int x, int y){
    if (! mm[x][y].isOpen() ) mm[x][y].setEtat(7);
+}
+
+//on teste si la porte est ouverte
+bool Plateau::isOpen(Case(*mm)[LARGEUR], int x, int y){
+    if(mm[x][y].isOpen()) return true;
+    return false;
 }

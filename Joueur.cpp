@@ -33,6 +33,43 @@ void Joueur::gauche(){
     }
 
 
+     //  diagonal haut droite 
+    void Joueur::diagonalDH(){
+     //avant modification
+     int currentX = this->xLoc;    
+    int currentY = this->yLoc;
+        setX(currentX -1);
+        setY(currentY + 1);
+    }
+
+    //  diagonal  Bas droite 
+    void Joueur::diagonalDB(){
+     //avant modification
+     int currentX = this->xLoc;    
+    int currentY = this->yLoc;
+        setX(currentX +1);
+        setY(currentY + 1);
+    }
+
+
+//  diagonal Bas Gauche 
+    void Joueur::diagonalGB(){
+     //avant modification
+     int currentX = this->xLoc;    
+    int currentY = this->yLoc;
+        setX(currentX +1);
+        setY(currentY - 1);
+    }
+    void Joueur::diagonalGH(){
+     //avant modification
+     int currentX = this->xLoc;    
+    int currentY = this->yLoc;
+        setX(currentX -1);
+        setY(currentY - 1);
+    }
+
+
+
 int Joueur::getX(){
     return this->xLoc;
 }

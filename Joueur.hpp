@@ -26,6 +26,12 @@ public:
     void bas(int hauteur);
     void gauche();
     void droit();
+
+     void diagonalDH();
+    void diagonalDB();
+    void diagonalGB();
+    void diagonalGH();
+    
     
     void seTeleporter();
     void ramasserDiams();

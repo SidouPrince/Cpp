@@ -153,6 +153,50 @@ int main(int argc, char const *argv[])
                 }
                 
             }
+
+             if ( touche == 'r' )
+            {
+                if ( pl.validePosition(p, currentX -1, currentY ) ) {
+                    if (pl.isDollar(p, currentX -1, currentY )) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX -1, currentY )) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.diagonalGH();
+                    
+                }
+             }
+
+              if ( touche == 'u' )
+            {
+                if ( pl.validePosition(p, currentX -1, currentY ) ) {
+                    if (pl.isDollar(p, currentX -1, currentY )) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX -1, currentY )) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.diagonalDH();
+                    
+                }
+                
+            }
+
+            if ( touche == 'c' )
+            {
+                if ( pl.validePosition(p, currentX +1, currentY) ) {
+                    if (pl.isDollar(p, currentX +1, currentY )) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX +1, currentY )) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.diagonalGB();
+                    
+                }
+            
+            }
+
+            if ( touche == 'n' )
+            {
+                if ( pl.validePosition(p, currentX +1, currentY ) ) {
+                    if (pl.isDollar(p, currentX +1, currentY )) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX +1, currentY )) joueur.setTeleportation((joueur.getTeleportation())+1);
+                    joueur.diagonalDB();
+                    
+                }
+                
+            }
+            
             //On test si le joueur à gagner un dollar
             if ( joueur.getScore() == 1 ) pl.openDoor(p, pl.emplacementPortes.at(0), pl.emplacementPortes.at(1));
             //si le joueur à 2 Dollar

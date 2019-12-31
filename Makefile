@@ -3,7 +3,7 @@ CPP=g++ --std=c++11
 all : projet
 
 projet : case.o   plateau.o joueur.o test.o
-	$(CPP) -o projet  Plateau.o  Case.o Joueur.o Test.o
+	$(CPP) -o projet  plateau.o  case.o joueur.o test.o
 case.o : Case.cpp Case.hpp
 	$(CPP) -c Case.cpp
 plateau.o : Plateau.cpp Plateau.hpp Case.hpp

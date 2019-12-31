@@ -97,7 +97,7 @@ int main(int argc, char const *argv[])
         uploadLevel(p, argv[niveau]);
         Plateau pl(getHauteur(argv[niveau]), LARGEUR);
         
-        pl.affichagePlateau(p); 
+        //pl.affichagePlateau(p); 
         int xLoc = pl.getX(p);
         int yLoc = pl.getY(p);
 
@@ -116,11 +116,10 @@ int main(int argc, char const *argv[])
             int currentY = pl.getY(p);
             if ( touche == 'h' )
             {
-               
                 if ( pl.validePosition(p, currentX - 1, currentY) ){
                     if (pl.isDollar(p, currentX -1, currentY)) joueur.setScore((joueur.getScore())+1);
                     if (pl.isGueurchar(p, currentX -1, currentY)) joueur.setTeleportation((joueur.getTeleportation())+1);
-                    joueur.haut();
+                     joueur.haut();
                 }
             }
             if ( touche == 'b' )
@@ -153,18 +152,39 @@ int main(int argc, char const *argv[])
                 }
                 
             }
+            //on test si le joueur à franchi la porte
+            if ( pl.isOpen(p, joueur.getX(), joueur.getY()) ){
+                cout << "   Bravoooooooooooo !!!" << endl;;
+                break;   
+            } 
             //On test si le joueur à gagner un dollar
-            if ( joueur.getScore() == 1 ) pl.openDoor(p, pl.emplacementPortes.at(0), pl.emplacementPortes.at(1));
+            if ( joueur.getScore() == 1 ) {
+                if(p[pl.emplacementPortes.at(0)][pl.emplacementPortes.at(1)].getEtat().compare("-") == 0){
+                    pl.openDoor(p, pl.emplacementPortes.at(0), pl.emplacementPortes.at(1));
+                }
+            }
             //si le joueur à 2 Dollar
-            if ( joueur.getScore() == 2 ) pl.openDoor(p, pl.emplacementPortes.at(2), pl.emplacementPortes.at(3));
+            if ( joueur.getScore() == 2 ){
+                if(p[pl.emplacementPortes.at(2)][pl.emplacementPortes.at(3)].getEtat().compare("-") == 0){
+                    pl.openDoor(p, pl.emplacementPortes.at(2), pl.emplacementPortes.at(3));
+                }
+            }
             pl.updatePosition(p, joueur, currentX, currentY);
             pl.affichagePlateau(p);
+
             
-        }
+    }
         
         //cout << "X == " << joueur.getX() << " Y == " << joueur.getY() << endl;
-        niveau++;
-
+        if ( niveau <= argc ){
+            cout << "Veuillez touchez une touche pour passer au niveau suivant" << endl;
+            getchar();
+            niveau++;
+        }else{
+            niveau++;
+        }
+        
+        
        }
    }
    /* Fin du jeu */

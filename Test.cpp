@@ -2,71 +2,9 @@
 #include "Case.hpp"
 #include "Plateau.hpp"
 #include "Joueur.hpp"
+#include "Fichier.hpp"
 #include <fstream>
 using namespace std;
-
-void lireFichier(string nomFichier){
-    ifstream fichier("Niveaux/"+nomFichier);
-
-        string ligne;
-        while ( getline(fichier, ligne))
-        {
-            cout << ligne << endl;
-        }
-}
-
-int getHauteur(string nomFichier){
-    ifstream fichier("Niveaux/"+nomFichier);
-
-        string ligne;
-        int nbLine = 0;
-        while ( getline(fichier, ligne))
-        {
-            nbLine++;
-        }
-    return nbLine;
-}
-//initialiser la matrice
-void uploadLevel(Case (*m)[LARGEUR], string nomFichier){
-    int nbLignes = getHauteur(nomFichier);
-    ifstream fichier("Niveaux/"+nomFichier);
-    string s;int i = 0;
-    while ( getline(fichier, s) )
-    {
-        for (int j = 0; j < LARGEUR; j++)
-            {
-                switch (s[j])
-                {
-                case 'X':
-                    m[i][j].setEtat(0);
-                    break;
-                case '$':
-                    m[i][j].setEtat(1);
-                    break;
-                case '*':
-                    m[i][j].setEtat(2);
-                    break;
-                case '-':
-                    m[i][j].setEtat(3);
-                    break;
-                case ' ':
-                    m[i][j].setEtat(4);
-                    break;
-                case 'J':
-                    m[i][j].setEtat(5);
-                    break;
-                case 'S':
-                    m[i][j].setEtat(6);
-                    break;
-                default:
-                    break;
-                }    
-            }
-             i++;
-            }
-           
-    
-}
 
 int main(int argc, char const *argv[])
 {
@@ -231,12 +169,12 @@ int main(int argc, char const *argv[])
         }
         
         
-       }
+       } 
    }
    /* Fin du jeu */
     }else{
         //creation du plateau -----> maintenant il faut le remplir
-    int hauteur, largeur;
+    static int hauteur, largeur;
     bool sortirBoucle = true;
     while(sortirBoucle){
         cout << "veuillez introduire une hauteur ..";

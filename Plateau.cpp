@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
+
 Plateau::Plateau(int h, int l){
     this->hauteur = h;
     this->largeur = l;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Case.hpp"
+#include "const.hpp"
 using namespace std;
 
 class Joueur
@@ -27,13 +28,13 @@ public:
     void gauche();
     void droit();
 
-     void diagonalDH();
+    void diagonalDH();
     void diagonalDB();
     void diagonalGB();
     void diagonalGH();
     
     
-    void seTeleporter();
+    bool seTeleporter(Case ( *matrice)[LARGEUR]);
     void ramasserDiams();
     void sortir();
     Joueur();

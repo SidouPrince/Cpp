@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
     'd' --> droite
     'q' --> quit
     */
-    static int niveau = 1;
+    int niveau = 1;
     int reponse = 0, choix = 0;
     string nomF = "";
     char touche ;
@@ -32,10 +32,9 @@ int main(int argc, char const *argv[])
        while ( niveau <= argc )
        {
         Case p[getHauteur(argv[niveau])][LARGEUR];
-        uploadLevel(p, argv[niveau]);
+        uploadLevel(p, argv[niveau]);//charger le plateau du fichier sur la matrice
         Plateau pl(getHauteur(argv[niveau]), LARGEUR);
-        
-        //pl.affichagePlateau(p); 
+    
         int xLoc = pl.getX(p);
         int yLoc = pl.getY(p);
 
@@ -82,18 +81,17 @@ int main(int argc, char const *argv[])
             }
             if ( touche == 'g' )
             {
-                if ( pl.validePosition(p, currentX, currentY - 1) ) {
-                    if (pl.isDollar(p, currentX, currentY - 1)) joueur.setScore((joueur.getScore())+1);
-                    if (pl.isGueurchar(p, currentX, currentY - 1)) joueur.setTeleportation((joueur.getTeleportation())+1);
+                if ( pl.validePosition(p, currentX, currentY -1) ) {
+                    cout << p[currentX][currentY -1].getEtat() << endl;
+                    if (pl.isDollar(p, currentX, currentY -1)) joueur.setScore((joueur.getScore())+1);
+                    if (pl.isGueurchar(p, currentX, currentY -1)) joueur.setTeleportation((joueur.getTeleportation())+1);
                     joueur.gauche();
                     
                 }
                 
             }
-
             //on test si le joueur à franchi la porte
             if ( pl.isOpen(p, joueur.getX(), joueur.getY()) ){
-                cout << "   Bravoooooooooooo !!!" << endl;;
                 break;   
             } 
 
@@ -137,6 +135,21 @@ int main(int argc, char const *argv[])
                     if (pl.isGueurchar(p, currentX +1, currentY )) joueur.setTeleportation((joueur.getTeleportation())+1);
                     joueur.diagonalDB();
                     
+                }
+                
+            }
+
+            if ( touche == 't' )
+            {
+                if ( joueur.getTeleportation() > 0 )
+                {
+                    if ( ! joueur.seTeleporter(p) ){
+                     cout << "deplacement interdit !" << endl;  }
+                    else{
+                    joueur.seTeleporter(p);
+                    int tmp = joueur.getTeleportation();
+                    joueur.setTeleportation(tmp- 1);
+                    }
                 }
                 
             }
@@ -204,11 +217,8 @@ int main(int argc, char const *argv[])
             sortirBoucle = false;
         }else{
             niveau = niveau +1;
-        }
-        
+        } 
     }
     }
-    
-
     return 0;
 }

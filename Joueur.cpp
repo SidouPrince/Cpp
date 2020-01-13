@@ -24,12 +24,12 @@ void Joueur::bas(int hauteur){
 void Joueur::droit(){
      //avant modification
     int currentY = this->yLoc;
-        setY(currentY + 1);
+        this->setY(currentY + 1);
     }
 void Joueur::gauche(){
      //avant modification
     int currentY = this->yLoc;
-        setY(currentY - 1);
+        this->setY(currentY - 1);
     }
 
 
@@ -96,4 +96,18 @@ void Joueur::setScore(int v){
 }
 void Joueur::setTeleportation(int t){
     this->teleportations = t;
+}
+bool Joueur::seTeleporter(Case (*matrice)[LARGEUR]){
+    int x = rand()%(18)+1;
+    int y = rand()% LARGEUR;
+
+    if (matrice[x][y].getEtat() == "X" || matrice[x][y].getEtat() =="S") return false;//position non valide
+    //recuperer les coord actuelles
+    int actuelX = this->getX();
+    int actuelY = this->getY();
+    matrice[x][y].setEtat(5);
+    matrice[actuelX][actuelY].setEtat(4);
+    this->setX(x);
+    this->setY(y);
+    return true;
 }

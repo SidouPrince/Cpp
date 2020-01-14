@@ -1,0 +1,42 @@
+Nom Prénom de binome :  
+	Sadi SidAli 
+ 	Braham Ayad
+
+//////////////////////////////
+
+
+Pour Lancer le jeu : 
+  make 
+ ./projet  args (les noms des niveaux  )  . 
+
+
+Une fois le jeu est lancé , y aura 3 choix :
+1 → pour commencer le jeu 
+2→ pour créer des plateau 
+3→ pour sauvegarder le plateau actuelle  
+
+
+
+si vous cliquez sur 1 : 
+le plateau que vous avez passer en paramètre après ./projet , s’affichera donc vous pouvez commencer à jouer en cliquant sur les touche suivantes pour se déplacer : 
+h → pour aller en haut 
+b→ en bas 
+d → pour aller à droite 
+g→ pour aller à gauche 
+r→ en haut gauche 
+u→ en haut droite 
+c→ en bas gauche 
+n→ en bas droite 
+si vous manger ‘*’ , vous aurez une possibilité de vous téléportez en cliquant sur la touche ‘t’ . 
+
+→ le but c’est de récupérer un trésor  ‘$’ pour qu’une porte ‘-’ s’ouvre ‘+’ ou vous pouvez passer au niveau suivant , en évitant le monstre ‘S’ qui tentent de vous empêcher.
+
+si vous cliquez sur 2 :
+Ici vous pouvez créer des plateau et les sauvegarder dans un fichier, pour les utiliser dans le jeu après. 
+
+ 
+si vous cliquez sur 3 :
+au moment de jeu vous pouvez  sauvegarder la partie afin de pouvoir la reprendre plus tard.
+
+
+

@@ -237,6 +237,7 @@ void Plateau::placerStreumon(Case(*mm)[LARGEUR], int niveau){
         
     }
 }
+/*sauvegarder plateau*/
 int Plateau::sauvegarderPlateau(Case (*mm)[LARGEUR], string nomFichier){
     ofstream monFichier("Niveaux/"+nomFichier);
     if ( monFichier )
@@ -257,6 +258,46 @@ int Plateau::sauvegarderPlateau(Case (*mm)[LARGEUR], string nomFichier){
     }
     
 }
+/*sauvegarder partie*/
+void Plateau::sauvegardePartie(Case(*mm)[LARGEUR], int s, int t, char const *argv[], int indice, int argc){
+    ofstream monFichierP("Niveaux/donnees.txt");
+    ofstream monFichier("Niveaux/plateau.txt");
+    if ( monFichier )
+    {
+       
+        for (int i = 0; i < hauteur; i++)
+        {
+            for (int j = 0; j < LARGEUR; j++)
+            {
+                monFichier << mm[i][j].getEtat();
+            }
+            monFichier << endl;
+            
+        }
+        
+    }else{
+        cout << "ERREUR : Impossible d'ouvrir le fichier " << endl;
+    }
+    if ( monFichierP )
+    {
+        monFichierP << s;
+        monFichierP << endl;
+        monFichierP << t;
+        monFichierP << endl;
+        indice = indice +1;
+        if ( indice <= argc ){
+            //j'ai des plateaux à enrigestrer
+            for (int i = indice; i < argc; i++)
+            {
+                monFichierP << argv[i];
+                monFichierP << endl;
+            }
+            
+        }
+    }
+    
+
+}
 
 /*getX et getY pour retrouver la position du joueur*/
 int Plateau::getX(Case(*mm)[LARGEUR]){
@@ -274,6 +315,14 @@ int Plateau::getX(Case(*mm)[LARGEUR]){
             
         }
 }
+void Plateau::positionsToMonstre(){
+    for (int i = 0; i < emplacementMonstres.size(); i++)
+    {
+        monstres.push_back(Monstre(emplacementMonstres.at(i), emplacementMonstres.at(i+1)));
+        i = i +1;
+    }
+    
+}
 //emplacement des portes
 void Plateau::getXYportes(Case(*mm)[LARGEUR]){
      for (int i = 0; i < hauteur; i++)
@@ -285,6 +334,23 @@ void Plateau::getXYportes(Case(*mm)[LARGEUR]){
                    /* ça veut dire que la porte se trouve dans cette case */
                    this->emplacementPortes.push_back(i);
                    this->emplacementPortes.push_back(j);
+               }
+               
+            }
+            
+        }
+}
+//emplacement des monstres
+void Plateau::getXYMonstres(Case(*mm)[LARGEUR]){
+     for (int i = 1; i < hauteur; i++)
+        {
+            for (int j = 1; j < LARGEUR; j++)
+            {
+               if ( mm[i][j].getEtat().compare("S") == 0 )
+               {
+                   /* ça veut dire que le monstre se trouve dans cette case */
+                   this->emplacementMonstres.push_back(i);
+                   this->emplacementMonstres.push_back(j);
                }
                
             }
@@ -314,6 +380,19 @@ int Plateau::getY(Case(*mm)[LARGEUR]){
         //je deplace directement
         mm[oldx][oldy].setEtat(4);
         mm[newx][newy].setEtat(5);
+    
+}
+void Plateau::updatePositionM(Case(*mm)[LARGEUR],vector<Monstre>& j, vector<int> positions){
+   int jj = 0;
+    for (int i = 0; i < j.size(); i++)
+    {
+        int newx = j.at(i).getX();
+        int newy = j.at(i).getY();
+        //je deplace directement
+        mm[positions.at(jj)][positions.at(jj+1)].setEtat(4);
+        mm[newx][newy].setEtat(6);
+        jj = jj+2;
+    }
     
 }
 

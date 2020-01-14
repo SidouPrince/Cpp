@@ -3,11 +3,12 @@
 #include "Plateau.hpp"
 #include "const.hpp"
 using namespace std;
-Joueur::Joueur(int x, int y, int s, int t){
+Joueur::Joueur(int x, int y, int s, int t, int go){
     this->xLoc = x;
     this->yLoc = y;
     this->score = s;
     this->teleportations = t;
+    this->gameOver = go;
 }
 
 void Joueur::haut(){
@@ -73,6 +74,9 @@ void Joueur::gauche(){
 int Joueur::getX(){
     return this->xLoc;
 }
+int Joueur::getGameOver(){
+    return this->gameOver;
+}
 int Joueur::getY(){
     return this->yLoc;
 }
@@ -86,6 +90,9 @@ int Joueur::getTeleportation(){
 
 void Joueur::setX(int x){
     this->xLoc = x;
+}
+void Joueur::setGameOver(int un){
+    this->gameOver = un;
 }
 void Joueur::setY(int y){
     this->yLoc = y;

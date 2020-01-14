@@ -6,7 +6,6 @@
 #include "Plateau.hpp"
 #include "Joueur.hpp"
 #include <fstream>
-
 void lireFichier(string nomFichier){
     ifstream fichier("Niveaux/"+nomFichier);
 
@@ -18,20 +17,20 @@ void lireFichier(string nomFichier){
 }
 //hauteur du fichier cad la matrice (nb de lignes)
 int getHauteur(string nomFichier){
-    ifstream fichier("Niveaux/"+nomFichier);
-
-        string ligne;
+     ifstream fichier("Niveaux/"+nomFichier);
+     string ligne;
         int nbLine = 0;
         while ( getline(fichier, ligne))
         {
             nbLine++;
         }
+        fichier.close();
     return nbLine;
 }
 
 //initialiser la matrice
 void uploadLevel(Case (*m)[LARGEUR], string nomFichier){
-    int nbLignes = getHauteur(nomFichier);
+    //int nbLignes = getHauteur(nomFichier);
     ifstream fichier("Niveaux/"+nomFichier);
     string s; int i = 0;
     while ( getline(fichier, s) )
@@ -61,12 +60,16 @@ void uploadLevel(Case (*m)[LARGEUR], string nomFichier){
                 case 'S':
                     m[i][j].setEtat(6);
                     break;
+                case '+':
+                    m[i][j].setEtat(7);
+                    break;
                 default:
                     break;
                 }    
             }
              i++;
-    }  
+    } 
+    fichier.close(); 
 }
 
 #endif

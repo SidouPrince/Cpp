@@ -171,14 +171,20 @@ int main(int argc, char const *argv[])
             cout << "Teleportations == " << joueur.getTeleportation() << endl;
             int currentX = pl.getX(p);
             int currentY = pl.getY(p);
+            pl.monstres.clear();
+            pl.emplacementMonstres.clear();
+            //coordonnees monstres
+            pl.getXYMonstres(p);
+            pl.positionsToMonstre();
             play(joueur, pl, p, currentX, currentY, touche, pl.monstres);
             //on test si le joueur à franchi la porte
             if ( pl.isOpen(p, joueur.getX(), joueur.getY()) ){
                 break;   
             }else{
             }
-            pl.updatePosition(p, joueur, currentX, currentY); 
-            pl.affichagePlateau(p); 
+            pl.affichagePlateau(p);
+            pl.updatePositionM(p,pl.monstres,pl.emplacementMonstres);
+            pl.updatePosition(p, joueur, currentX, currentY);
         }
         if ( niveau <= argc && touche != 'q' && joueur.getGameOver() != 1){
             cout << "Veuillez touchez une touche pour passer au niveau suivant" << endl;
